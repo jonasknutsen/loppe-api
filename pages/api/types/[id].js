@@ -1,4 +1,6 @@
-import db from 'db'
+import { getDB } from '../../../db'
+
+const { db } = getDB()
 
 export default async function handler (req, res) {
   const {
