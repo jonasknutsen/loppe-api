@@ -1,12 +1,12 @@
 import * as pgLib from 'pg-promise'
 
 let ssl = {
-  rejectUnauthorized: true
+  rejectUnauthorized: false
 }
 
-if (process.env.NODE_ENV === 'development') {
+/* if (process.env.NODE_ENV === 'development') {
   ssl = {rejectUnauthorized: false}
-}
+} */
 
 
 const pgp = pgLib(/* initialization options */)
