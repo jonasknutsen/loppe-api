@@ -17,7 +17,7 @@ export default async function handler (req, res) {
       case 'GET': {
         const first = new Date(year, 1, 1)
         const last = new Date(year, 12, 31, 23, 59)
-        db.any('SELECT e.id, e.openingtimes, e.closingtimes, e.facebook, p.name as place, p.slug as place_slug, p.address, p.postcode, p.city, o.name as organizer, o.slug as organizer_slug FROM events e JOIN places p ON e.place = p.id JOIN organizers o ON e.organizer = o.id WHERE $1::date < ANY(openingtimes) AND $2::date > ANY(openingtimes) ORDER BY p.postcode', [first, last])
+        db.any('SELECT e.id, e.openingtimes, e.closingtimes, e.facebook, p.name as place, p.slug as place_slug, p.address, p.postcode, p.city, p.latitude, p.longitude, o.name as organizer, o.slug as organizer_slug FROM events e JOIN places p ON e.place = p.id JOIN organizers o ON e.organizer = o.id WHERE $1::date < ANY(openingtimes) AND $2::date > ANY(openingtimes) ORDER BY p.postcode', [first, last])
           .then(events => {
             // success
             res.status(200).json(events)

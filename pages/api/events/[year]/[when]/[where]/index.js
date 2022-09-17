@@ -24,7 +24,7 @@ export default async function handler (req, res) {
           return t.one('SELECT id FROM areas WHERE slug = $1', [where])
             .then(area => {
               if(area) {
-                return t.any('SELECT e.id, e.openingtimes, e.closingtimes, e.facebook, p.name as place, p.slug as place_slug, p.address, p.postcode, p.city, o.name as organizer, o.slug as organizer_slug, p.areas as event_areas FROM events e JOIN places p ON e.place = p.id JOIN organizers o ON e.organizer = o.id WHERE $1::date < ANY(openingtimes) AND $2::date > ANY(openingtimes) AND $3 = ANY(p.areas) ORDER BY p.postcode', [first, last, area.id])
+                return t.any('SELECT e.id, e.openingtimes, e.closingtimes, e.facebook, p.name as place, p.slug as place_slug, p.address, p.postcode, p.city, p.latitude, p.longitude, o.name as organizer, o.slug as organizer_slug, p.areas as event_areas FROM events e JOIN places p ON e.place = p.id JOIN organizers o ON e.organizer = o.id WHERE $1::date < ANY(openingtimes) AND $2::date > ANY(openingtimes) AND $3 = ANY(p.areas) ORDER BY p.postcode', [first, last, area.id])
                   .then(events => {
                     return events
                   })
